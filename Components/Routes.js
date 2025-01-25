@@ -39,15 +39,14 @@ export const addGadget = async (req, res) => {
 export const updateGadget = async (req, res) => {
   try {
     const { id } = req.params; 
-    const updatedData = req.body; 
-
+    const {name} = req.body; 
+   
     // Find and update the gadget by ID
-    const updatedGadget = await Gadget.findOneAndUpdate({ id }, updatedData, { new: true });
+    const updatedGadget = await Gadget.updateOne({ _id:id },{$set:{name:name}});
     if (!updatedGadget) {
       return res.status(404).json({ message: 'Gadget is not found' });
     }
-
-    res.json(updatedGadget); 
+    res.json({message:'Gadget Information updated Successfully'}); 
   } catch (err) {
     res.status(500).json({ message: 'Error while updating gadget', error: err.message });
   }
@@ -56,7 +55,7 @@ export const updateGadget = async (req, res) => {
 // Mark a gadget as decommissioned instead of deleting it
 export const deleteGadget = async (req, res) => {
   try {
-    console.log('hey hi')
+   
     const { id } = req.params; 
     const gadget = await Gadget.findById({ _id:id });
     if (!gadget) {
