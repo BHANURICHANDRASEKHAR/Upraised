@@ -98,7 +98,7 @@ export const selfDestructGadget = async (req, res) => {
  *         name: status
  *         schema:
  *           type: string
- *         description: Filter gadgets by their status (e.g., Active, Decommissioned).
+ *         description: Filter gadgets by their status (e.g., 'Available', 'Deployed', 'Destroyed', 'Decommissioned').
  *     responses:
  *       200:
  *         description: A list of gadgets.
