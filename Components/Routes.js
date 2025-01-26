@@ -3,9 +3,10 @@ import Gadget from '../DataBase/Schema.js'
 // Retrieve a list of all gadgets
 export const getGadgets = async (req, res) => {
   try {
-    const { status } = req.query;
-   
-    const gadgets = await Gadget.find({status}); // Fetch gadgets based on the query
+      const { status } = req.query;
+    const query=status==undefined ? {} : status
+    const gadgets = await Gadget.find(query); // Fetch gadgets based on the query
+
 
     const response = gadgets.map(gadget => ({
       ...gadget.toObject(),
