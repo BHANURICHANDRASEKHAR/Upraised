@@ -87,4 +87,146 @@ export const selfDestructGadget = async (req, res) => {
   }
 };
 
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     summary: Retrieve all gadgets
+ *     description: Get a list of all gadgets, optionally filtered by status.
+ *     parameters:
+ *       - in: query
+ *         name: status
+ *         schema:
+ *           type: string
+ *         description: Filter gadgets by their status (e.g., Active, Decommissioned).
+ *     responses:
+ *       200:
+ *         description: A list of gadgets.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *                     description: The unique ID of the gadget.
+ *                   name:
+ *                     type: string
+ *                     description: The name of the gadget.
+ *                   status:
+ *                     type: string
+ *                     description: The status of the gadget (e.g., Active, Decommissioned).
+ *                   mission_Success_Probability:
+ *                     type: string
+ *                     description: The success probability of the gadget in percentage.
+ */
 
+/**
+ * @swagger
+ * /:
+ *   post:
+ *     summary: Add a new gadget
+ *     description: Create a new gadget and add it to the list.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               
+ *     responses:
+ *       201:
+ *         description: Gadget successfully created.
+ */
+
+/**
+ * @swagger
+ * /{id}:
+ *   patch:
+ *     summary: Update a gadget
+ *     description: Modify the details of a gadget.
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID of the gadget to update.
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               
+ *     responses:
+ *       200:
+ *         description: Gadget successfully updated.
+ */
+
+/**
+ * @swagger
+ * /{id}:
+ *   delete:
+ *     summary: Delete a gadget
+ *     description: Remove a gadget from the list.
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID of the gadget to delete.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       204:
+ *         description: Gadget successfully deleted.
+ */
+/**
+ * @swagger
+ * /{id}/self-destruct:
+ *   post:
+ *     summary: Initiate gadget self-destruct sequence
+ *     description: Starts the self-destruct sequence for a specific gadget and provides a confirmation code.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The ID of the gadget to self-destruct.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Self-destruct sequence initiated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: A message confirming the initiation of the self-destruct sequence.
+ *                 confirmationCode:
+ *                   type: string
+ *                   description: A randomly generated 6-digit confirmation code for the self-destruct sequence.
+ *       500:
+ *         description: Error triggering self-destruct sequence.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ *                 error:
+ *                   type: string
+ *                   description: Details about the error.
+ */
