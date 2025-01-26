@@ -3,10 +3,9 @@ import Gadget from '../DataBase/Schema.js'
 // Retrieve a list of all gadgets
 export const getGadgets = async (req, res) => {
   try {
-      const { status } = req.query;
+    const { status } = req.query;
     const query=status==undefined ? {} : status
     const gadgets = await Gadget.find(query); // Fetch gadgets based on the query
-
 
     const response = gadgets.map(gadget => ({
       ...gadget.toObject(),
@@ -40,10 +39,10 @@ export const addGadget = async (req, res) => {
 export const updateGadget = async (req, res) => {
   try {
     const { id } = req.params; 
-    const {name} = req.body; 
+    const {status} = req.body; 
    
     // Find and update the gadget by ID
-    const updatedGadget = await Gadget.updateOne({ _id:id },{$set:{name:name}});
+    const updatedGadget = await Gadget.updateOne({ _id:id },{$set:{status:status}});
     if (!updatedGadget) {
       return res.status(404).json({ message: 'Gadget is not found' });
     }
@@ -92,14 +91,15 @@ export const selfDestructGadget = async (req, res) => {
  * @swagger
  * /:
  *   get:
- *     summary: Retrieve all gadgets
+ *     summary: Retrieve all gadgets Based on the specified status is status is null it will return all Gadgets Data
  *     description: Get a list of all gadgets, optionally filtered by status.
  *     parameters:
  *       - in: query
  *         name: status
+ *         
  *         schema:
  *           type: string
- *         description: Filter gadgets by their status (e.g., 'Available', 'Deployed', 'Destroyed', 'Decommissioned').
+ *           description: Filter gadgets by their status (e.g., 'Available', 'Deployed', 'Destroyed', 'Decommissioned').
  *     responses:
  *       200:
  *         description: A list of gadgets.
@@ -150,7 +150,7 @@ export const selfDestructGadget = async (req, res) => {
  * /{id}:
  *   patch:
  *     summary: Update a gadget
- *     description: Modify the details of a gadget.
+ *     description: Modify the status of a gadget by its ID.
  *     parameters:
  *       - name: id
  *         in: path
@@ -165,12 +165,29 @@ export const selfDestructGadget = async (req, res) => {
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               status:
  *                 type: string
- *               
+ *                 description: New status for the gadget (e.g., 'Available', 'Deployed', 'Destroyed', 'Decommissioned').
  *     responses:
  *       200:
  *         description: Gadget successfully updated.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Confirmation message for the update.
+ *                 gadget:
+ *                   type: object
+ *                   description: The updated gadget object.
+ *       400:
+ *         description: Invalid input or missing required fields.
+ *       404:
+ *         description: Gadget not found.
+ *       500:
+ *         description: Internal server error.
  */
 
 /**
